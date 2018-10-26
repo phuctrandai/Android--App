@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="forgot_your_password">Forgot Your Password ?</string>
+    <string name="android_application">Android Application</string>
+    <string name="loginText">Login</string>
+    <string name="passwordHint">Password</string>
+    <string name="userNameHint">User name</string>
+</resources>
