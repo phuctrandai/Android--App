@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     tools:context=".StudentDetailActivity">
 
     <LinearLayout
@@ -21,22 +22,24 @@
                 android:id="@+id/tvIdLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Mã sinh viên: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="15T1021129 " />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="15T1021129 "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,22 +52,24 @@
                 android:id="@+id/tvNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Họ và tên: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="Trần Đại Phúc" />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="Trần Đại Phúc"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,22 +82,24 @@
                 android:id="@+id/tvAgeLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Tuổi: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="15T1021129 " />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="15T1021129 "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,22 +112,24 @@
                 android:id="@+id/tvSexLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Giới tính: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="Nam " />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="Nam "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -133,22 +142,24 @@
                 android:id="@+id/tvBirthDateLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Ngày sinh: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvBirthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="15/1/1997 " />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="15/1/1997 "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -161,22 +172,24 @@
                 android:id="@+id/tvAddressLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Địa chỉ: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:paddingLeft="4dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
-                android:text="Huế " />
+                android:paddingLeft="@dimen/left_padding"
+                android:text="Huế "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
     </LinearLayout>

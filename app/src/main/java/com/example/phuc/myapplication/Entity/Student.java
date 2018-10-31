@@ -1,6 +1,7 @@
 package com.example.phuc.myapplication.Entity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Student {
@@ -36,7 +37,7 @@ public class Student {
         Student s;
 
         for (int i = 0; i < 10; i++) {
-            s = new Student(i + "", "Sinh vien " + i, (i + 1) * 20, true, new Date(118, 0, 10), "Hue", i + 1 + "");
+            s = new Student(i + "", "Sinh vien " + i, (i + 1) * 20, true, new Date(), "Hue", i + 1 + "");
             list.add(s);
         }
 

@@ -1,14 +1,15 @@
 package com.example.phuc.myapplication;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class StudentDetailActivity extends AppCompatActivity {
+    static final int MODIFY_STUDENT_INFO_REQUEST = 1;
 
     private TextView tvId;
     private TextView tvName;
@@ -26,6 +27,8 @@ public class StudentDetailActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         showStudentDetail(bundle);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -42,14 +45,35 @@ public class StudentDetailActivity extends AppCompatActivity {
             bundle.putString("id", tvId.getText().toString());
             bundle.putString("name", tvName.getText().toString());
             bundle.putInt("age", Integer.parseInt(tvAge.getText().toString()));
-            bundle.putBoolean("sex", Boolean.parseBoolean(tvSex.getText().toString()));
             bundle.putString("birthDate", tvBirthDate.getText().toString());
             bundle.putString("address", tvAddress.getText().toString());
+            boolean sex = tvSex.getText().equals("Nam") ? true : false;
+            bundle.putBoolean("sex", sex);
             intent.putExtras(bundle);
 
-            startActivity(intent);
+            startActivityForResult(intent, MODIFY_STUDENT_INFO_REQUEST);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == MODIFY_STUDENT_INFO_REQUEST) {
+            if (resultCode == ModifyStudentInfoActivity.RESULT_MODIFIED) {
+                Bundle bundle = data.getExtras();
+                String sex = bundle.getBoolean("sex") ? "Nam" : "Nữ";
+                tvId.setText(bundle.getString("id"));
+                tvName.setText(bundle.getString("name"));
+                tvAge.setText(bundle.getInt("age") + "");
+                tvSex.setText(sex);
+                tvBirthDate.setText(bundle.getString("birthDate"));
+                tvAddress.setText(bundle.getString("address"));
+
+                setResult(resultCode, data);
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     private void showStudentDetail(Bundle bundle) {
@@ -60,11 +84,14 @@ public class StudentDetailActivity extends AppCompatActivity {
         tvBirthDate = findViewById(R.id.tvBirthDate);
         tvAddress = findViewById(R.id.tvAddress);
 
+        String sex = bundle.getBoolean("sex") ? "Nam" : "Nữ";
         tvId.setText(bundle.getString("id"));
         tvName.setText(bundle.getString("name"));
         tvAge.setText(bundle.getInt("age") + "");
-        tvSex.setText(bundle.getBoolean("sex") + "");
+        tvSex.setText(sex);
         tvBirthDate.setText(bundle.getString("birthDate"));
         tvAddress.setText(bundle.getString("address"));
+
+        getSupportActionBar().setTitle("Xem chi tiết");
     }
 }

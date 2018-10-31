@@ -1,29 +1,29 @@
 package com.example.phuc.myapplication;
 
-import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.phuc.myapplication.Adapter.StudentAdapter;
 import com.example.phuc.myapplication.Entity.Student;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int SHOW_DETAIL_STUDENT_REQUEST = 3;
 
     private ListView lvDSSinhVien;
 
@@ -32,7 +32,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        customActionBar();
+
         hienThiDsSinhVien();
+    }
+
+    public void customActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Danh sách sinh viên");
+
     }
 
     public void hienThiDsSinhVien() {
@@ -46,18 +54,22 @@ public class MainActivity extends AppCompatActivity {
         lvDSSinhVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(MainActivity.this, StudentDetailActivity.class);
+
+                Date temp = dsSinhVien.get(position).getBirthDate();
+                String birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).format(temp);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("id", dsSinhVien.get(position).getId());
                 bundle.putString("name", dsSinhVien.get(position).getName());
                 bundle.putInt("age", dsSinhVien.get(position).getAge());
                 bundle.putBoolean("sex", dsSinhVien.get(position).isMale());
-                bundle.putString("birthDate", dsSinhVien.get(position).getBirthDate().toLocaleString());
+                bundle.putString("birthDate", birthDate);
                 bundle.putString("address", dsSinhVien.get(position).getAddress());
                 intent.putExtras(bundle);
 
-                startActivity(intent);
+                startActivityForResult(intent, SHOW_DETAIL_STUDENT_REQUEST);
             }
         });
 
@@ -67,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle("Thong bao!");
-                builder.setMessage("Ban co muon xoa '" + dsSinhVien.get(position) + "' khong ?");
+                builder.setMessage("Ban co muon xoa '" + dsSinhVien.get(position).getName() + "' khong ?");
 
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
@@ -84,9 +96,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.create().show();
-                return false;
+                return true;
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == SHOW_DETAIL_STUDENT_REQUEST) {
+            if (resultCode == ModifyStudentInfoActivity.RESULT_MODIFIED) {
+
+
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     @Override
@@ -126,10 +150,6 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.mnItemSearch) {
 
-        }
-        if (item.getItemId() == R.id.mnItemSetting) {
-            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
-            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

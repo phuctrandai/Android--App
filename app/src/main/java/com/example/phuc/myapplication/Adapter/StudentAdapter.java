@@ -44,8 +44,8 @@ public class StudentAdapter extends BaseAdapter {
         TextView tvId = convertView.findViewById(R.id.tvId);
         TextView tvName = convertView.findViewById(R.id.tvName);
 
-        tvId.append(list.get(position).getId());
-        tvName.append(list.get(position).getName());
+        tvId.setText(list.get(position).getId());
+        tvName.setText(list.get(position).getName());
 
         return convertView;
     }
