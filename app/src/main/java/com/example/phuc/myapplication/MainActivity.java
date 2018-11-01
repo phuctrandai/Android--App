@@ -18,7 +18,9 @@ import com.example.phuc.myapplication.Adapter.StudentAdapter;
 import com.example.phuc.myapplication.Entity.Student;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int SHOW_DETAIL_STUDENT_REQUEST = 3;
 
     private ListView lvDSSinhVien;
+    private ArrayList<Student> dsSinhVien;
+    private StudentAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void hienThiDsSinhVien() {
-        final ArrayList<Student> dsSinhVien = Student.getList();
+        dsSinhVien = Student.getList();
 
         lvDSSinhVien = (ListView) findViewById(R.id.lvDSSinhVien);
 
-        final StudentAdapter arrayAdapter = new StudentAdapter(this, dsSinhVien);
+        arrayAdapter = new StudentAdapter(this, dsSinhVien);
         lvDSSinhVien.setAdapter(arrayAdapter);
 
         lvDSSinhVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 String birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).format(temp);
 
                 Bundle bundle = new Bundle();
+                bundle.putInt("stuPos", position);
                 bundle.putString("id", dsSinhVien.get(position).getId());
                 bundle.putString("name", dsSinhVien.get(position).getName());
                 bundle.putInt("age", dsSinhVien.get(position).getAge());
@@ -105,8 +110,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == SHOW_DETAIL_STUDENT_REQUEST) {
             if (resultCode == ModifyStudentInfoActivity.RESULT_MODIFIED) {
+                Bundle bundle = data.getExtras();
+                int position = bundle.getInt("stuPos");
+                Date birthDate = null;
+                try {
+                    birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).parse(bundle.getString("birthDate"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-
+                dsSinhVien.get(position).setMale(bundle.getBoolean("sex"));
+                dsSinhVien.get(position).setId(bundle.getString("id"));
+                dsSinhVien.get(position).setName(bundle.getString("name"));
+                dsSinhVien.get(position).setAge(bundle.getInt("age"));
+                dsSinhVien.get(position).setAddress(bundle.getString("address"));
+                dsSinhVien.get(position).setBirthDate(birthDate);
+                arrayAdapter.notifyDataSetChanged();
             } else if (resultCode == RESULT_CANCELED) {
 
             }

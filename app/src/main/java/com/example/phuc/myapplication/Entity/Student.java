@@ -1,5 +1,7 @@
 package com.example.phuc.myapplication.Entity;
 
+import android.os.Build;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,8 +38,8 @@ public class Student {
         ArrayList<Student> list = new ArrayList<>();
         Student s;
 
-        for (int i = 0; i < 10; i++) {
-            s = new Student(i + "", "Sinh vien " + i, (i + 1) * 20, true, new Date(), "Hue", i + 1 + "");
+        for (int i = 0; i < 15; i++) {
+            s = new Student(i + "", "Sinh vien " + i, (i + 1) * 20, true, Calendar.getInstance().getTime(), "Hue", i + 1 + "");
             list.add(s);
         }
 

@@ -18,6 +18,7 @@ public class StudentDetailActivity extends AppCompatActivity {
     private TextView tvBirthDate;
     private TextView tvAddress;
 
+    private int stuPos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +43,15 @@ public class StudentDetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.mnItemModify) {
             Intent intent = new Intent(StudentDetailActivity.this, ModifyStudentInfoActivity.class);
             Bundle bundle = new Bundle();
+            boolean sex = tvSex.getText().equals("Nam") ? true : false;
+
             bundle.putString("id", tvId.getText().toString());
             bundle.putString("name", tvName.getText().toString());
             bundle.putInt("age", Integer.parseInt(tvAge.getText().toString()));
             bundle.putString("birthDate", tvBirthDate.getText().toString());
             bundle.putString("address", tvAddress.getText().toString());
-            boolean sex = tvSex.getText().equals("Nam") ? true : false;
             bundle.putBoolean("sex", sex);
+            bundle.putInt("stuPos", stuPos);
             intent.putExtras(bundle);
 
             startActivityForResult(intent, MODIFY_STUDENT_INFO_REQUEST);
@@ -76,6 +79,11 @@ public class StudentDetailActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void showStudentDetail(Bundle bundle) {
         tvId = findViewById(R.id.tvId);
         tvName = findViewById(R.id.tvName);
@@ -85,12 +93,13 @@ public class StudentDetailActivity extends AppCompatActivity {
         tvAddress = findViewById(R.id.tvAddress);
 
         String sex = bundle.getBoolean("sex") ? "Nam" : "Nữ";
+        tvSex.setText(sex);
         tvId.setText(bundle.getString("id"));
         tvName.setText(bundle.getString("name"));
         tvAge.setText(bundle.getInt("age") + "");
-        tvSex.setText(sex);
         tvBirthDate.setText(bundle.getString("birthDate"));
         tvAddress.setText(bundle.getString("address"));
+        stuPos = bundle.getInt("stuPos");
 
         getSupportActionBar().setTitle("Xem chi tiết");
     }

@@ -1,21 +1,17 @@
 package com.example.phuc.myapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class ModifyStudentInfoActivity extends AppCompatActivity {
 
@@ -33,6 +29,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
     private Button btnSave;
     private Button btnCancel;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +58,10 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
                 boolean sex = spnSex.getSelectedItem().toString().equals("Nam") ? true : false;
                 bundleResult.putBoolean("sex", sex);
 
-                Date temp = new Date(spnDay.getSelectedItemPosition() + 1, spnMonth.getSelectedItemPosition() + 1, spnYear.getSelectedItemPosition() + 1990);
-                String birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).format(temp);
+                String day = spnDay.getSelectedItem().toString();
+                String month = spnMonth.getSelectedItem().toString();
+                String year = spnYear.getSelectedItem().toString();
+                String birthDate = day + "/" + month + "/" + year;
                 bundleResult.putString("birthDate", birthDate);
 
                 intentResult.putExtras(bundleResult);
@@ -91,12 +90,14 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         spnYear = findViewById(R.id.spnYear);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void showStudentDetail(Bundle bundle) {
         edtId.append(bundle.getString("id"));
         edtName.append(bundle.getString("name"));
         edtAge.append(bundle.getInt("age") + "");
         edtAddress.append(bundle.getString("address"));
 
+        // Set sex
         String[] sex;
         if (bundle.getBoolean("sex"))
             sex = new String[]{"Nam", "Nữ"};
@@ -106,22 +107,18 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnSex.setAdapter(adapter);
 
-        // Set day
-        Date birthDate = new Date();
-        try {
-            birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(bundle.getString("birthDate"));
-            Log.d(this.getClass().toString(), "Format date success: " + birthDate);
-        } catch (ParseException e) {
-            Log.d(this.getClass().toString(), "Format date error: " + e.getMessage());
-        }
+        String birthDate = bundle.getString("birthDate");
+        String birthDate_day = birthDate.substring(0, 2);
+        String birthDate_month = birthDate.substring(3, 5);
+        String birthDate_year = birthDate.substring(6);
+        // Set Day
         ArrayList<String> day = new ArrayList<>();
         for (int i = 1; i <= 31; i++) {
             day.add(String.valueOf(i));
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, day);
         spnDay.setAdapter(adapter);
-        spnDay.setSelection(birthDate.getDay() + 27);
-        Log.d(this.getClass().toString(), birthDate.getDay() + "");
+        spnDay.setSelection(Integer.parseInt(birthDate_day) - 1);
 
         // Set month
         ArrayList<String> month = new ArrayList<>();
@@ -130,8 +127,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, month);
         spnMonth.setAdapter(adapter);
-        spnMonth.setSelection(birthDate.getMonth());
-        Log.d(this.getClass().toString(), birthDate.getMonth() + "");
+        spnMonth.setSelection(Integer.parseInt(birthDate_month) - 1);
 
         // Set year
         ArrayList<String> year = new ArrayList<>();
@@ -140,7 +136,6 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, year);
         spnYear.setAdapter(adapter);
-        spnYear.setSelection(birthDate.getYear() - 90);
-        Log.d(this.getClass().toString(), birthDate.getYear() - 90 + "");
+        spnYear.setSelection(Integer.parseInt(birthDate_year) - 1990);
     }
 }
