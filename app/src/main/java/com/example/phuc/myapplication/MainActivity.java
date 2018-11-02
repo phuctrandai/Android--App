@@ -20,14 +20,17 @@ import com.example.phuc.myapplication.Entity.Student;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     public static final int SHOW_DETAIL_STUDENT_REQUEST = 3;
+    public static final int ADD_STUDENT_REQUEST = SHOW_DETAIL_STUDENT_REQUEST + 1;
 
+    private android.support.design.widget.FloatingActionButton fabAdd;
     private ListView lvDSSinhVien;
+
+    private int stuPos;
     private ArrayList<Student> dsSinhVien;
     private StudentAdapter arrayAdapter;
 
@@ -35,16 +38,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        overridePendingTransition(R.anim.slide_anim_enter, R.anim.slide_anim_exit);
 
         customActionBar();
 
         hienThiDsSinhVien();
+
+        fabAdd = findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
+                startActivityForResult(intent, ADD_STUDENT_REQUEST);
+            }
+        });
     }
 
     public void customActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Danh sách sinh viên");
-
     }
 
     public void hienThiDsSinhVien() {
@@ -58,14 +70,13 @@ public class MainActivity extends AppCompatActivity {
         lvDSSinhVien.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                stuPos = position;
                 Intent intent = new Intent(MainActivity.this, StudentDetailActivity.class);
 
                 Date temp = dsSinhVien.get(position).getBirthDate();
                 String birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).format(temp);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("stuPos", position);
                 bundle.putString("id", dsSinhVien.get(position).getId());
                 bundle.putString("name", dsSinhVien.get(position).getName());
                 bundle.putInt("age", dsSinhVien.get(position).getAge());
@@ -111,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SHOW_DETAIL_STUDENT_REQUEST) {
             if (resultCode == ModifyStudentInfoActivity.RESULT_MODIFIED) {
                 Bundle bundle = data.getExtras();
-                int position = bundle.getInt("stuPos");
+
                 Date birthDate = null;
                 try {
                     birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).parse(bundle.getString("birthDate"));
@@ -119,12 +130,35 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                dsSinhVien.get(position).setMale(bundle.getBoolean("sex"));
-                dsSinhVien.get(position).setId(bundle.getString("id"));
-                dsSinhVien.get(position).setName(bundle.getString("name"));
-                dsSinhVien.get(position).setAge(bundle.getInt("age"));
-                dsSinhVien.get(position).setAddress(bundle.getString("address"));
-                dsSinhVien.get(position).setBirthDate(birthDate);
+                dsSinhVien.get(stuPos).setMale(bundle.getBoolean("sex"));
+                dsSinhVien.get(stuPos).setId(bundle.getString("id"));
+                dsSinhVien.get(stuPos).setName(bundle.getString("name"));
+                dsSinhVien.get(stuPos).setAge(bundle.getInt("age"));
+                dsSinhVien.get(stuPos).setAddress(bundle.getString("address"));
+                dsSinhVien.get(stuPos).setBirthDate(birthDate);
+                arrayAdapter.notifyDataSetChanged();
+            } else if (resultCode == RESULT_CANCELED) {
+
+            }
+        } else if (requestCode == ADD_STUDENT_REQUEST) {
+            if (resultCode == AddStudentActivity.RESULT_ADDED) {
+                Bundle bundle = data.getExtras();
+
+                Date birthDate = null;
+                try {
+                    birthDate = DateFormat.getDateInstance(DateFormat.SHORT, new Locale("vie", "VN")).parse(bundle.getString("birthDate"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Student newStu = new Student();
+                newStu.setMale(bundle.getBoolean("sex"));
+                newStu.setId(bundle.getString("id"));
+                newStu.setName(bundle.getString("name"));
+                newStu.setAge(bundle.getInt("age"));
+                newStu.setAddress(bundle.getString("address"));
+                newStu.setBirthDate(birthDate);
+                dsSinhVien.add(newStu);
                 arrayAdapter.notifyDataSetChanged();
             } else if (resultCode == RESULT_CANCELED) {
 

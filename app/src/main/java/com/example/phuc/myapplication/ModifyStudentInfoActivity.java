@@ -34,6 +34,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_student_info);
+        overridePendingTransition(R.anim.slide_y_anim_enter, R.anim.slide_y_anim_exit);
         getSupportActionBar().setTitle("Chỉnh sửa thông tin");
         setView();
         setAction();
@@ -98,11 +99,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         edtAddress.append(bundle.getString("address"));
 
         // Set sex
-        String[] sex;
-        if (bundle.getBoolean("sex"))
-            sex = new String[]{"Nam", "Nữ"};
-        else
-            sex = new String[]{"Nữ", "Nam"};
+        String[] sex = bundle.getBoolean("sex") ? new String[]{"Nam", "Nữ"} : new String[]{"Nữ", "Nam"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sex);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spnSex.setAdapter(adapter);
@@ -111,7 +108,8 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         String birthDate_day = birthDate.substring(0, 2);
         String birthDate_month = birthDate.substring(3, 5);
         String birthDate_year = birthDate.substring(6);
-        // Set Day
+
+        // Set data for spinner Day
         ArrayList<String> day = new ArrayList<>();
         for (int i = 1; i <= 31; i++) {
             day.add(String.valueOf(i));
@@ -120,7 +118,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         spnDay.setAdapter(adapter);
         spnDay.setSelection(Integer.parseInt(birthDate_day) - 1);
 
-        // Set month
+        // Set data for spinner month
         ArrayList<String> month = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             month.add(String.valueOf(i));
@@ -129,7 +127,7 @@ public class ModifyStudentInfoActivity extends AppCompatActivity {
         spnMonth.setAdapter(adapter);
         spnMonth.setSelection(Integer.parseInt(birthDate_month) - 1);
 
-        // Set year
+        // Set data for spinner year
         ArrayList<String> year = new ArrayList<>();
         for (int i = 1990; i <= 2018; i++) {
             year.add(String.valueOf(i));

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -18,11 +19,11 @@ public class StudentDetailActivity extends AppCompatActivity {
     private TextView tvBirthDate;
     private TextView tvAddress;
 
-    private int stuPos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_detail);
+        overridePendingTransition(R.anim.fade_anim_enter, R.anim.fade_anim_exit);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -51,7 +52,6 @@ public class StudentDetailActivity extends AppCompatActivity {
             bundle.putString("birthDate", tvBirthDate.getText().toString());
             bundle.putString("address", tvAddress.getText().toString());
             bundle.putBoolean("sex", sex);
-            bundle.putInt("stuPos", stuPos);
             intent.putExtras(bundle);
 
             startActivityForResult(intent, MODIFY_STUDENT_INFO_REQUEST);
@@ -71,7 +71,6 @@ public class StudentDetailActivity extends AppCompatActivity {
                 tvSex.setText(sex);
                 tvBirthDate.setText(bundle.getString("birthDate"));
                 tvAddress.setText(bundle.getString("address"));
-
                 setResult(resultCode, data);
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -99,8 +98,6 @@ public class StudentDetailActivity extends AppCompatActivity {
         tvAge.setText(bundle.getInt("age") + "");
         tvBirthDate.setText(bundle.getString("birthDate"));
         tvAddress.setText(bundle.getString("address"));
-        stuPos = bundle.getInt("stuPos");
-
         getSupportActionBar().setTitle("Xem chi tiết");
     }
 }

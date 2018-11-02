@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddStudentActivity">
+    tools:context=".StudentDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,22 +21,22 @@
                 android:id="@+id/tvIdLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Mã sinh viên: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:inputType="text"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp" />
+                android:paddingLeft="@dimen/left_padding" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,26 +46,25 @@
             android:weightSum="3">
 
             <TextView
-                android:id="@+id/tvNameLabel"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Họ và tên: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:capitalize="words"
                 android:inputType="textPersonName"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp" />
+                android:paddingLeft="@dimen/left_padding" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,22 +77,24 @@
                 android:id="@+id/tvAgeLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Tuổi: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp" />
+                android:paddingLeft="@dimen/left_padding"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,23 +107,23 @@
                 android:id="@+id/tvSexLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Giới tính: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/spnSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
                 android:text="Nam "
-                android:textAlignment="center" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,22 +136,39 @@
                 android:id="@+id/tvBirthDateLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Ngày sinh: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edtBirthDate"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="date"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <Spinner
+                    android:id="@+id/spnDay"
+                    android:layout_width="@dimen/spinner_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true" />
+
+                <Spinner
+                    android:id="@+id/spnMonth"
+                    android:layout_width="@dimen/spinner_width"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true" />
+
+                <Spinner
+                    android:id="@+id/spnYear"
+                    android:layout_width="@dimen/spinner_width"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -163,22 +181,24 @@
                 android:id="@+id/tvAddressLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="2"
-                android:paddingLeft="24sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp"
+                android:paddingLeft="@dimen/left_padding"
                 android:text="Địa chỉ: "
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_info_text_size"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:inputType="text"
-                android:paddingLeft="14dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="4dp" />
+                android:paddingLeft="@dimen/left_padding"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/info_text_size" />
         </LinearLayout>
 
         <LinearLayout
